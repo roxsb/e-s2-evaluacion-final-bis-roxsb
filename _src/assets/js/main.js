@@ -3,10 +3,9 @@
 const selectFormValue = document.querySelectorAll('.form__value');
 const buttonStart = document.querySelector('.btn');
 const cardsList = document.querySelector('.list__cards');
-const oppositeImg = 'assets/images/opuesta.png';
 
 let radioValue = '';
-let pokemonArray = [];
+let pokemonArray = '';
 
 console.log(selectFormValue.value);
 
@@ -30,7 +29,7 @@ buttonStart.addEventListener('click',getCards);
 clickListener();
 
 function loadCards (data) {
-  pokemonArray.push(`<li><img src="${data.image}"></li>`);
+  pokemonArray +=`<li class="opposite__image"><img src="${data.image}"></li>`;
 }
 
 function getCards(){
@@ -39,7 +38,7 @@ function getCards(){
       return response.json();
     })
     .then(function(data) {
-      pokemonArray = [];
+      pokemonArray = '';
       for (let i=0;i<data.length;i++){
         loadCards(data[i]);
       }
