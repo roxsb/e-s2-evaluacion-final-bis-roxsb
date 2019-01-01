@@ -6,6 +6,7 @@ const cardsList = document.querySelector('.list__cards');
 
 let radioValue = '';
 let pokemonArray = '';
+let pokemonPairActive = '';
 
 console.log(selectFormValue.value);
 
@@ -16,6 +17,7 @@ function setRadio(e){
   }
   e.currentTarget.classList.add('selected');
   radioValue = event.currentTarget.value;
+  //guardar este número en localStorage
   localStorage.setItem('number',JSON.stringify(radioValue))
 }
 function getRadio () {
@@ -27,11 +29,11 @@ function clickListener(){
 }
 buttonStart.addEventListener('click',getCards);
 clickListener();
-
+//mostrar la parte de atrás siempre añadiendo la clase
 function loadCards (data) {
-  pokemonArray +=`<li class="opposite__image"><img src="${data.image}"></li>`;
+  pokemonArray +=`<li class="opposite__image"><img class ="pokemon__image" src="${data.image}"></li>`;
 }
-
+//conectar a una API que devuelve un listado de cartas donde NUMERO puede tomar el valor de 4, 6 y 8. obtendremosla URL de la imagen a mostrar
 function getCards(){
   fetch(`https://raw.githubusercontent.com/Adalab/cards-data/master/${radioValue}.json`)
     .then(function(response) {
@@ -43,42 +45,23 @@ function getCards(){
         loadCards(data[i]);
       }
       cardsList.innerHTML = pokemonArray;
+      pokemonListeners();
     });
 }
 
-//recoge el valor sin necesidad del listener de comenzar
-// function getRadioValue(event){
-//   radioValue = event.currentTarget.value;
-//   console.log(radioValue);
-//   localStorage.setItem('number',JSON.stringify(radioValue));
-// }
+function activePokemon(e){
+  //Al hacer clic sobre una carta vamos a mostrar su parte frontal y a ocultar su parte trasera viendo si tiene la clase active, si no, la añade, y si la tiene se la quita
+  if( !e.currentTarget.classList.contains('active__pokemon') ){
+    e.currentTarget.classList.add('active__pokemon');
+  }else{
+    e.currentTarget.classList.remove('active__pokemon');
+  }
+}
 
-// function initPage () {clickListener();buttonStart.addEventListener('click',getRadio)}
-// initPage()
-
-
-
-//conectar a una API que devuelve un listado de cartas donde NUMERO puede tomar el valor de 4, 6 y 8. obtendremosla URL de la imagen a mostrar
-
-//guardar este número en localStorage
-
-
-//hacer que el listado sea interactivo
-//Ocultar la parte frontal de las cartas mostrando solo la parte de atrás
-
-//Al hacer clic sobre una carta vamos a mostrar su parte frontal y a ocultar su parte trasera
-
-//Al volver a hacer clic haremos la operación contraria, y volveremos a ver su parte trasera y ocultar la frontal
-
-//implementar el juego
-//Cuando se hace clic en una primera carta esta se da la vuelta y nos muestra su pokemon, Al hacer clic en una segunda carta esta se da la vuelta y: si es la pareja de la primera las dos se quedan boca arriba, si no es la pareja de la primera las dos deben mantenerse visibles durante un periodo corto de tiempo y ponerse boca abajo.
-
-
-
-
-
-
-
-//cosas a medias MAL
+function pokemonListeners(){
+  for(let i=0;i<cardsList.childNodes.length;i++){
+    cardsList.childNodes[i].addEventListener('click',activePokemon);
+  }
+}
 
 
