@@ -31,7 +31,7 @@ buttonStart.addEventListener('click',getCards);
 clickListener();
 //mostrar la parte de atrás siempre añadiendo la clase
 function loadCards (data) {
-  pokemonArray +=`<li class="opposite__image"><img class ="pokemon__image" src="${data.image}"></li>`;
+  pokemonArray +=`<li class="box opposite__image"><img class ="pokemon__image" src="${data.image}"></li>`;
 }
 //conectar a una API que devuelve un listado de cartas donde NUMERO puede tomar el valor de 4, 6 y 8. obtendremosla URL de la imagen a mostrar
 function getCards(){
