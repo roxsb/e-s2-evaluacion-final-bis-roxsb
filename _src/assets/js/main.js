@@ -3,6 +3,7 @@
 const selectFormValue = document.querySelectorAll('.form__value');
 const buttonStart = document.querySelector('.btn');
 const cardsList = document.querySelector('.list__cards');
+const counterNumber = document.querySelector('.counter');
 
 let radioValue = '';
 let pokemonArray = '';
@@ -14,7 +15,7 @@ function setRadio(e){
   }
   e.currentTarget.classList.add('selected');
   radioValue = event.currentTarget.value;
-  localStorage.setItem('number',JSON.stringify(radioValue))
+  localStorage.setItem('number',JSON.stringify(radioValue));
 }
 
 function getRadio () {
@@ -29,7 +30,7 @@ buttonStart.addEventListener('click',getCards);
 clickListener();
 
 function loadCards (data) {
-  pokemonArray +=`<li class="box opposite__image"><img class ="pokemon__image" src="${data.image}"></li>`;
+  pokemonArray +=`<li class="box opposite__image"><div>${data.pair}</div><img class ="pokemon__image" src="${data.image}"></li>`;
 }
 
 function getCards(){
@@ -46,8 +47,13 @@ function getCards(){
       pokemonListeners();
     });
 }
-
+let numberX = 0;
 function activePokemon(e){
+  //
+  if(numberX < 5){
+    numberX = numberX +1;
+    counterNumber.innerHTML = numberX;
+  }
   if( !e.currentTarget.classList.contains('active__pokemon') ){
     e.currentTarget.classList.add('active__pokemon');
   }else{
